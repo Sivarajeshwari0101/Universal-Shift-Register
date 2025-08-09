@@ -1,0 +1,22 @@
+module universal_shift_reg_tb;
+    reg        clk, rst;
+    reg  [1:0] mode;
+    reg  [3:0] data_in;
+    wire [3:0] data_out;
+
+    universal_shift_reg dut (.clk(clk), .rst(rst), .mode(mode), .data_in(data_in), .data_out(data_out));
+
+    initial clk = 0;
+    always #5 clk = ~clk;
+
+    initial begin
+        rst = 1; mode = 0; data_in = 0; #10;
+        rst = 0;
+
+        mode = 2'b11; data_in = 4'b1010; #10; 
+        mode = 2'b01; #10;                    
+        mode = 2'b10; #10;                    
+        mode = 2'b00; #10;                   
+        $finish;
+    end
+endmodule
